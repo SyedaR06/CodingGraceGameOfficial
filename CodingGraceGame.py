@@ -439,6 +439,64 @@ def green_magic_room(player_info_arg):
         # The player lost — return to the adventure loop.
         print("The magician waves his hand and you are whisked away...\n")
         return "flee"
+    
+    #START OF SYEDA's ROOM: The Curious Silver Room
+
+        
+def curious_silver_room(player_info_arg):
+    """The Curious Silver Room: a mysterious space with a captivating guessing game."""
+
+    def silver_key():
+        print(r"""
+                ooo,    .---.
+                o`  o   /    |\________________
+                o`   'oooo()  | ________   _   _)
+                `oo   o` \    |/        | | | |
+                `ooo'   `---'         "-" |_|
+                                                hjw
+        """)
+
+    print("Welcome! You have entered the Curious Silver Room, a place of mystery, intrigue, and of course shiny silver objects.")
+    
+    # --- Update player state ---
+
+    player_info_arg["location"]= "Silver Room"
+    player_info_arg["choices"].append("Silver Room")
+
+    show_player_info(player_info_arg)
+
+    print("In this room, you will face a captivating guessing game that tests your intuition and luck.")
+    print("It is a rather simple game: I will think of a number between 1 and 10 and you must guess it.")
+    print("If you guess correctly, you will receive a silver key that unlocks your door to freedom.")
+    print("But be warned: Each wrong guess will cost you dearly. At each failed attempt, you will lose 20 health points.")
+    print ("You do know what happens after you run out of health points, right?")
+    print("Spoiler alert: you will die! So choose wisely and may the odds be ever in your favor.")
+
+    guess_number=random.randint(1,10)
+
+    while player_info_arg["health"] > 0:
+        guess=input("Enter a number between 1 and 10: ")
+
+        try:
+            guess=int(guess)
+        except ValueError:
+            print("That didn't work. Please enter a valid number.")
+            continue
+
+        if guess == guess_number:
+            print(f"Congratulations! You've guessed the correct number {guess_number} and received the silver key!")
+            if "Silver Key" not in player_info_arg["inventory"]:
+                player_info_arg["inventory"].append("Silver Key")
+                silver_key()
+                print("You have earned the Silver Key and can now unlock the door to freedom!")
+            return "flee"
+        
+        else:
+            player_info_arg["health"] -=20
+            print(f"Wrong guess! Your health is now {player_info_arg['health']}.")
+
+        if player_info_arg["health"] <= 0:
+            you_died("You have exhausted all attempts and succumbed to the dangers of the Silver Room. Better luck next time!")
 
 
 # ===========================================================================
@@ -720,4 +778,6 @@ def print_new_dungeon():
 # they can call main(player_info) themselves when ready.
 
 if __name__ == '__main__':
-    player_info = main(player_info)
+    #player_info = main(player_info)
+    curious_silver_room(player_info)
+
