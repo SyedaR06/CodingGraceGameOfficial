@@ -445,6 +445,41 @@ def green_magic_room(player_info_arg):
 # CONTROL FUNCTIONS
 # ===========================================================================
 
+# =====================================================
+# ================== ROSE ROOM ========================
+# =====================================================
+def riddle_room(player_info_arg):
+    """A mysterious and dark chamber that challenges that player with a riddle."""
+    print("\n===RIDDLE ROOM ===")
+    print("You enyter a quiet chamber filled with glowling heiroglyph.")
+    
+    player_info_arg["location"] = "Riddle Room"
+    player_info_arg["health"] -= 5
+    
+    item = "Manuscript"
+    if item not in player_info_arg["inventory"]:
+        player_info_arg["inventory"].append(item)
+        print("You found a Manuscript!")
+        
+    player_info_arg["choices"].append("Riddle Room")
+    
+    show_player_info(player_info_arg)
+    
+    print("\nA voice asks:")
+    print('"What has black and white and "read" all over?"')
+    
+    answer = input("> ").strip().lower()
+    
+    if answer in ["book", "a book"]:
+        you_won("Corect. Knowledge is the key to open doors.")
+        elif "flee" in answer:
+            return "flee"
+        else:
+            you_died("Wrong answer. The manuscript disinegrates into pieces!")
+        return player_info_arg
+        
+# =======================================================
+
 def get_player_name(player_info_arg):
     """Prompts the player for their name and optionally assigns a nickname.
 
