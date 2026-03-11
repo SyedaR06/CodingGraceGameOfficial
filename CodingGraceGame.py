@@ -451,10 +451,12 @@ def green_magic_room(player_info_arg):
 def riddle_room(player_info_arg):
     """A mysterious and dark chamber that challenges that player with a riddle."""
     print("\n===RIDDLE ROOM ===")
-    print("You enyter a quiet chamber filled with glowling heiroglyph.")
+    print("You enyter a quiet chamber filled with glowling hieroglyphs. The doors lock behind you.")
     
     player_info_arg["location"] = "Riddle Room"
     player_info_arg["health"] -= 5
+    
+    player_info_arg["health"] = max(0,min(200, player_info_arg["health"]))
     
     item = "Manuscript"
     if item not in player_info_arg["inventory"]:
@@ -465,17 +467,27 @@ def riddle_room(player_info_arg):
     
     show_player_info(player_info_arg)
     
-    print("\nA voice asks:")
+    print("\nYou read what is on the manuscript:")
     print('"What has black and white and "read" all over?"')
     
-    answer = input("> ").strip().lower()
+    answer = input("\your answer (or type 'decline' to leave. (you will lose health -20 if you decline): ").strip().lower()
     
     if answer in ["book", "a book"]:
-        you_won("Corect. Knowledge is the key to open doors.")
-        elif "flee" in answer:
-            return "flee"
-        else:
-            you_died("Wrong answer. The manuscript disinegrates into pieces!")
+        print("/nThe doors to the chamber behind you open! You can now leave.")
+        
+        player_info_arg["health"] =+60
+        player_info_arg["health"] = min(200,player_info_arg["health"])
+        
+        you_won("Correct. Knowledge is the key to open doors.")
+        
+    elif "decline" in answer:
+        player_info_arg["health"] =-20
+        player_info_arg["health"] = max(0,player_info_arg["health"])
+        
+        return "You've decline to answer. You put the manuscript down and walk out."
+        
+    else:
+        you_died("Wrong answer. The manuscript disinegrates into pieces and the chambers lock you in for eternity!")
         return player_info_arg
         
 # =======================================================
@@ -551,6 +563,13 @@ def start_new_adventure(player_info_arg):
             room_result = blissful_ignorance_of_illusion_room(player_info_arg)
         elif door.startswith("green"):
             room_result = green_magic_room(player_info_arg)
+            
+#==================adding rose room to mix================
+
+        elif door.startswith("riddle") or door.startswith("rose"):
+            room_result = riddle_room(player_info_arg)
+            
+#==========This will allow players to enter room============
         else:
             print("Sorry, it's either 'red', 'blue', or 'green' as the "
                   "answer. You're the weakest link, goodbye!")
