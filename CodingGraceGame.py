@@ -443,61 +443,68 @@ def green_magic_room(player_info_arg):
 #START OF AMELIE'S ROOM: The Purple Room
 def healing_purple_room(player_info_arg):
     """The Purple Room: A healing chamber that restores the players health."""
+     # --- Update player state ---
+    player_info_arg["location"]= "Purple Room"
+    player_info_arg["choices"].append("Purple Room")
     
     print("Welcome to the Purple Room.") 
     print_purple_room_pool()
     print("As you step inside, the warm steam envelopes you.")
-    print("Take a dive and let the mystical healing propties of the water restore you to full health.")
-    print("When you feel rejuvinated, continue your adventure.")
+    print("Take a dive and let the mystical healing properties of the water restore you to full health.")
+    print("When you feel rejuvenated, continue your adventure.")
 
     while player_info_arg["health"] < 100:
-        player_info_arg["health"] += 10
-        print(f"{player_info_arg['health']} + 10")
-
-        if player_info_arg["health"] == 100:
-            print("You now feel rejuvinated and ready for a fight.")
-            print("You're about to get out of the water, when you see a small creature in the corner of the room.")
-            
+        player_info_arg["health"] = 100
+        print("You now feel rejuvenated and ready for a fight.")
+        print("You're about to get out of the water, when you see a small creature in the corner of the room.")
+       
+        while True:
             pr_action = input("Approach the creature or leave?")
             
             if pr_action.lower() == "approach":
                 print("As you get closer to the corner, you can make out the creature.")
                 print("A sleeping coiled up snake! Upon closer inspection, it's protecting a ring that will give you strength.")
-
-                pr_action2 = input("Risk picking up the ring or leave? (Pick Up [] or Leave [])")
+          
+                while True:
+                    pr_action2 = input("Risk picking up the ring or leave? (Pick Up [] or Leave [])")
                 
-                if pr_action2.lower() == "pick up":
-                    print("You slowly reach for the ring and successfully pick it up without waking up the snake.")
-                    print(r"""
-                            _______
-                           /       \
-                          /  \    / \
-                          \   \  /  /
-                           \   \/  /
-                          .-'------'-.
-                        .'  ________  '.
-                       /   /        \   \
-                       |   |         |   |
-                       |   |         |   |
-                       \   \________/   /
-                        '.____________.'
-                    """)
-                    strength_ring = "strength ring"
+                    if pr_action2.lower() == "pick up":
+                        print("You slowly reach for the ring and successfully pick it up without waking up the snake.")
+                        print(r"""
+                                _______
+                               /       \
+                              /  \    / \
+                              \   \  /  /
+                               \   \/  /
+                              .-'------'-.
+                            .'  ________  '.
+                           /   /        \   \
+                           |   |         |   |
+                           |   |         |   |
+                           \   \________/   /
+                            '.____________.'
+                        """)
+                        strength_ring = "strength ring"
 
-                    if strength_ring not in player_info_arg["inventory"]:
-                        player_info_arg["inventory"].append(strength_ring)
-                        print(f"{strength_ring} was  added  to your inventory!")
+                        if strength_ring not in player_info_arg["inventory"]:
+                            player_info_arg["inventory"].append(strength_ring)
+                            print(f"{strength_ring} was  added  to your inventory!")
+                        break
 
-                    else:
+                    elif pr_action2.lower() == "leave":
                         print("You left the room.")
                         return "flee"
-            else:
+                    
+                    else:
+                        print("Invalid option. Please try again.")
+                break
+        
+            elif pr_action == "leave":
                 print("You left the room.")
                 return "flee"
 
-    # --- Update player state ---
-    player_info_arg["location"]= "Purple Room"
-    player_info_arg["choices"].append("Purple Room")
+            else:
+                print("Invalid option. Please try again.")
     
     show_player_info(player_info_arg)
 
