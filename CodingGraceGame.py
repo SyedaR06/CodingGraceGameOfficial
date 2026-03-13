@@ -446,6 +446,8 @@ def green_magic_room(player_info_arg):
 def curious_silver_room(player_info_arg):
     """The Curious Silver Room: a mysterious space with a captivating guessing game."""
 
+    #Copied over from https://www.asciiart.eu
+
     def silver_key():
         print(r"""
                 ooo,    .---.
@@ -463,7 +465,6 @@ def curious_silver_room(player_info_arg):
     player_info_arg["location"]= "Silver Room"
     player_info_arg["choices"].append("Silver Room")
 
-    show_player_info(player_info_arg)
 
     print("In this room, you will face a captivating guessing game that tests your intuition and luck.")
     print("It is a rather simple game: I will think of a number between 1 and 10 and you must guess it.")
@@ -489,6 +490,7 @@ def curious_silver_room(player_info_arg):
                 player_info_arg["inventory"].append("Silver Key")
                 silver_key()
                 print("You have earned the Silver Key and can now unlock the door to freedom!")
+            show_player_info(player_info_arg)
             return "flee"
         
         else:
@@ -496,6 +498,7 @@ def curious_silver_room(player_info_arg):
             print(f"Wrong guess! Your health is now {player_info_arg['health']}.")
 
         if player_info_arg["health"] <= 0:
+            show_player_info(player_info_arg)
             you_died("You have exhausted all attempts and succumbed to the dangers of the Silver Room. Better luck next time!")
 
 
@@ -778,6 +781,5 @@ def print_new_dungeon():
 # they can call main(player_info) themselves when ready.
 
 if __name__ == '__main__':
-    #player_info = main(player_info)
-    curious_silver_room(player_info)
+    player_info = main(player_info)
 
