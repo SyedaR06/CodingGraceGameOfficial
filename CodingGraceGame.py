@@ -448,6 +448,7 @@ def green_magic_room(player_info_arg):
 # =====================================================
 # ================== ROSE ROOM ========================
 # =====================================================
+# Room Author 1 — Dennise==============================
 def riddle_room(player_info_arg):
     """A mysterious and dark chamber that challenges that player with a riddle."""
     print("\n===RIDDLE ROOM ===")
