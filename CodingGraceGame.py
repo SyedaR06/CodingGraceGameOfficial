@@ -493,6 +493,7 @@ def healing_purple_room(player_info_arg):
 
                     elif pr_action2.lower() == "leave":
                         print("You left the room.")
+                        show_player_info(player_info_arg)
                         return "flee"
                     
                     else:
@@ -501,11 +502,12 @@ def healing_purple_room(player_info_arg):
         
             elif pr_action.lower() == "leave":
                 print("You left the room.")
+                show_player_info(player_info_arg)
                 return "flee"
 
             else:
                 print("Invalid option. Please try again.")
-    
+                
     show_player_info(player_info_arg)
 
     return player_info_arg
