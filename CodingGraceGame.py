@@ -445,6 +445,55 @@ def green_magic_room(player_info_arg):
 # CONTROL FUNCTIONS
 # ===========================================================================
 
+# =====================================================
+# ================== ROSE ROOM ========================
+# =====================================================
+def riddle_room(player_info_arg):
+    """A mysterious and dark chamber that challenges the player with a riddle."""
+    print("\n===RIDDLE ROOM ===")
+    print("You enter a quiet chamber filled with glowing hieroglyphs. The doors lock behind you.")
+    
+    player_info_arg["location"] = "Riddle Room"
+    player_info_arg["health"] -= 5
+    
+    player_info_arg["health"] = max(0,min(200, player_info_arg["health"]))
+    
+    item = "Manuscript"
+    if item not in player_info_arg["inventory"]:
+        player_info_arg["inventory"].append(item)
+        print("You found a Manuscript!")
+        
+    player_info_arg["choices"].append("Riddle Room")
+        
+    print("\nYou read what is on the manuscript:")
+    print('"What has black and white and "read" all over?"')
+    
+    answer = input("\nyour answer (or type 'flee' to leave. (you will lose health -20 if you flee): ").strip().lower()
+    
+    if answer in ["book", "a book"]:
+        print()
+        
+        player_info_arg["health"] +=60
+        player_info_arg["health"] = min(200,player_info_arg["health"])
+
+        show_player_info(player_info_arg)
+
+        you_won("Correct. Knowledge is the key to open doors. The doors to the chamber behind you open! You can now leave.")
+        
+    elif "flee" in answer:
+        player_info_arg["health"] -=20
+        player_info_arg["health"] = max(0,player_info_arg["health"])
+        
+        show_player_info(player_info_arg)
+        
+        return "flee"
+        
+    else:
+        show_player_info(player_info_arg)
+
+        you_died("Wrong answer. The manuscript disintegrates into pieces and the chambers lock you in for eternity!")        
+# =======================================================
+
 def get_player_name(player_info_arg):
     """Prompts the player for their name and optionally assigns a nickname.
 
@@ -516,6 +565,7 @@ def start_new_adventure(player_info_arg):
             room_result = blissful_ignorance_of_illusion_room(player_info_arg)
         elif door.startswith("green"):
             room_result = green_magic_room(player_info_arg)
+            
         else:
             print("Sorry, it's either 'red', 'blue', or 'green' as the "
                   "answer. You're the weakest link, goodbye!")
