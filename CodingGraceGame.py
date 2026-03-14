@@ -499,7 +499,7 @@ def healing_purple_room(player_info_arg):
                         print("Invalid option. Please try again.")
                 break
         
-            elif pr_action == "leave":
+            elif pr_action.lower() == "leave":
                 print("You left the room.")
                 return "flee"
 
