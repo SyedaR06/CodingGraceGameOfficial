@@ -440,8 +440,8 @@ def green_magic_room(player_info_arg):
         print("The magician waves his hand and you are whisked away...\n")
         return "flee"
     
-    #START OF SYEDA's ROOM: The Curious Silver Room
 
+#START OF SYEDA's ROOM: The Curious Silver Room
         
 def curious_silver_room(player_info_arg):
     """The Curious Silver Room: a mysterious space with a captivating guessing game."""
@@ -501,7 +501,7 @@ def curious_silver_room(player_info_arg):
             show_player_info(player_info_arg)
             you_died("You have exhausted all attempts and succumbed to the dangers of the Silver Room. Better luck next time!")
 
-#START OF AMELIE'S ROOM: The Purple Room
+#START OF AMELIE'S ROOM: The Purple Healing Room
 def healing_purple_room(player_info_arg):
     """The Purple Room: A healing chamber that restores the players health."""
      # --- Update player state ---
@@ -573,14 +573,7 @@ def healing_purple_room(player_info_arg):
 
     return player_info_arg
 
-
-# ===========================================================================
-# CONTROL FUNCTIONS
-# ===========================================================================
-
-# =====================================================
-# ================== ROSE ROOM ========================
-# =====================================================
+#START OF DENNISE'S ROOM: The Rose Riddle Room
 def riddle_room(player_info_arg):
     """A mysterious and dark chamber that challenges the player with a riddle."""
     print("\n===RIDDLE ROOM ===")
@@ -625,7 +618,9 @@ def riddle_room(player_info_arg):
         show_player_info(player_info_arg)
 
         you_died("Wrong answer. The manuscript disintegrates into pieces and the chambers lock you in for eternity!")        
-# =======================================================
+# ===========================================================================
+# CONTROL FUNCTIONS
+# ===========================================================================
 
 def get_player_name(player_info_arg):
     """Prompts the player for their name and optionally assigns a nickname.
@@ -683,10 +678,8 @@ def start_new_adventure(player_info_arg):
 
     while True:
         print_new_dungeon()
-        print("You enter a room, and you see a red door to your left "
-              "and blue and green doors to your right.")
-        door_picked = input("Do you pick the red door, blue door, "
-                            "or green door? > ")
+        print("You see six doors: red, blue, green, silver, rose, and purple.")
+        door_picked = input("Which door do you choose? > ")
 
         # We compare only the first few characters so that inputs like
         # "red door", "blue", or "green one" all work.
@@ -698,7 +691,13 @@ def start_new_adventure(player_info_arg):
             room_result = blissful_ignorance_of_illusion_room(player_info_arg)
         elif door.startswith("green"):
             room_result = green_magic_room(player_info_arg)
-            
+        elif door.startswith("silver"):
+            room_result = curious_silver_room(player_info_arg)
+        elif door.startswith("rose"):
+            room_result = riddle_room(player_info_arg)
+        elif door.startswith("purple"):
+            room_result = healing_purple_room(player_info_arg)
+
         else:
             print("Sorry, it's either 'red', 'blue', or 'green' as the "
                   "answer. You're the weakest link, goodbye!")
@@ -899,7 +898,7 @@ def print_purple_room_pool():
     print(r" | |                                                         | | ")
     print(r" | |_________________________________________________________| | ")
     print(r" | |     ---                                         ---     | | ")
-    print(r" | |      O                                           O      | |  )
+    print(r" | |      O                                           O      | |  ")
     print(r" | |    |[ ]|           [ RECOVERY POOL ]           |[ ]|    | | ")
     print(r" | |    |___|                                       |___|    | | ")
     print(r" | |               ___________________________               | | ")
