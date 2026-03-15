@@ -501,6 +501,78 @@ def curious_silver_room(player_info_arg):
             show_player_info(player_info_arg)
             you_died("You have exhausted all attempts and succumbed to the dangers of the Silver Room. Better luck next time!")
 
+#START OF AMELIE'S ROOM: The Purple Room
+def healing_purple_room(player_info_arg):
+    """The Purple Room: A healing chamber that restores the players health."""
+     # --- Update player state ---
+    player_info_arg["location"]= "Purple Room"
+    player_info_arg["choices"].append("Purple Room")
+    
+    print("Welcome to the Purple Room.") 
+    print_purple_room_pool()
+    print("As you step inside, the warm steam envelopes you.")
+    print("Take a dive and let the mystical healing properties of the water restore you to full health.")
+    print("When you feel rejuvenated, continue your adventure.")
+
+    while player_info_arg["health"] < 100:
+        player_info_arg["health"] = 100
+        print("You now feel rejuvenated and ready for a fight.")
+        print("You're about to get out of the water, when you see a small creature in the corner of the room.")
+       
+        while True:
+            pr_action = input("Approach the creature or leave?")
+            
+            if pr_action.lower() == "approach":
+                print("As you get closer to the corner, you can make out the creature.")
+                print("A sleeping coiled up snake! Upon closer inspection, it's protecting a ring that will give you strength.")
+          
+                while True:
+                    pr_action2 = input("Risk picking up the ring or leave? (Pick Up [] or Leave [])")
+                
+                    if pr_action2.lower() == "pick up":
+                        print("You slowly reach for the ring and successfully pick it up without waking up the snake.")
+                        print(r"""
+                                _______
+                               /       \
+                              /  \    / \
+                              \   \  /  /
+                               \   \/  /
+                              .-'------'-.
+                            .'  ________  '.
+                           /   /        \   \
+                           |   |         |   |
+                           |   |         |   |
+                           \   \________/   /
+                            '.____________.'
+                        """)
+                        strength_ring = "strength ring"
+
+                        if strength_ring not in player_info_arg["inventory"]:
+                            player_info_arg["inventory"].append(strength_ring)
+                            print(f"{strength_ring} was  added  to your inventory!")
+                        break
+
+                    elif pr_action2.lower() == "leave":
+                        print("You left the room.")
+                        show_player_info(player_info_arg)
+                        return "flee"
+                    
+                    else:
+                        print("Invalid option. Please try again.")
+                break
+        
+            elif pr_action.lower() == "leave":
+                print("You left the room.")
+                show_player_info(player_info_arg)
+                return "flee"
+
+            else:
+                print("Invalid option. Please try again.")
+                
+    show_player_info(player_info_arg)
+
+    return player_info_arg
+
 
 # ===========================================================================
 # CONTROL FUNCTIONS
@@ -821,6 +893,31 @@ def print_new_dungeon():
     print(r"/   -_- _ -                  _- _---                             -_-  -_-         \ ")
     print()
 
+def print_purple_room_pool():
+    #Amelie utilized chatGPT to generate the ASCII art shown below
+    print(r"  _____________________________________________________________  ")
+    print(r" | |                                                         | | ")
+    print(r" | |_________________________________________________________| | ")
+    print(r" | |     ---                                         ---     | | ")
+    print(r" | |      O                                           O      | |  )
+    print(r" | |    |[ ]|           [ RECOVERY POOL ]           |[ ]|    | | ")
+    print(r" | |    |___|                                       |___|    | | ")
+    print(r" | |               ___________________________               | | ")
+    print(r" | |              /                            \              | | ")
+    print(r" | |             /     ~    ~    ~    ~    ~    \             | | ")
+    print(r" | |            /   ~    ~    ~    ~    ~    ~   \            | | ")
+    print(r" | |           /      ~      [+ HP +]      ~      \           | | ")
+    print(r" | |          /   ~    ~    ~    ~    ~    ~    ~  \          | | ")
+    print(r" | |         /______________________________________\         | | ")
+    print(r" | |        /|                                       |\        | | ")
+    print(r" | |       / |_______________________________________| \       | | ")
+    print(r" | |      /      ~    ~    ~    ~    ~    ~    ~    ~   \      | | ")
+    print(r" | |     /    ~    ~    ~    ~ [+ HP +]   ~    ~    ~    \     | | ")
+    print(r" | |    /_________________________________________________\    | | ")
+    print(r" | /                                                           \ | ")
+    print(r" |/_____________________________________________________________\| ")
+    print()
+ 
 
 # ===========================================================================
 # ENTRY POINT
